@@ -92,6 +92,28 @@ function deleteAgente(req, res) {
 
   res.status(200);
 }
+// Funções bonus 
+function getAgentesByCargo(req, res) {
+    const { cargo } = req.query;
+    const agentes = agentesRepository.findAll()
+        .filter(agente => agente.cargo.toLowerCase() === cargo.toLowerCase());
+    res.status(200).json(agentes);
+}
+
+function getAgentesSorted(req, res) {
+    const { sort } = req.query;
+    const agentes = [...agentesRepository.findAll()];
+    
+    agentes.sort((a, b) => {
+        const dateA = new Date(a.dataDeIncorporacao);
+        const dateB = new Date(b.dataDeIncorporacao);
+        return sort.startsWith('-') ? dateB - dateA : dateA - dateB;
+    });
+    
+    res.status(200).json(agentes);
+}
+
+
 
 module.exports = {
   getAllAgentes,
@@ -99,5 +121,8 @@ module.exports = {
   createAgente,
   updateAgente,
   patchAgente,
-  deleteAgente
+  deleteAgente,
+  getAgentesByCargo,
+  getAgentesSorted
+
 };

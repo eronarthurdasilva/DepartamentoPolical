@@ -34,7 +34,7 @@ function findById(id) {
 }
 
 //Criar um novo agente 
-function creat(agente) {
+function create(agente) {
     agentes.push(agente);
     return agente;
 }
@@ -42,11 +42,13 @@ function creat(agente) {
 
 //Função para atualizar completa o dados do agente
 function update(id, updatedData){
-    const index = agentes.fingIndex(agente => agente.id ===id);
+    const index = agentes.fingIndex(agente => agente.id === id);
     if(index === -1) return null;
 
-    agentes[index] = { id, ...updatedData };//Matém o mesmo ID
+    agentes[index] = { ...agentes[index], ...updatedData };//Matém o mesmo ID
+    
     return agentes[index];
+
 }
 
 //função para atualização parcial dos dados do agente
@@ -66,3 +68,12 @@ function remove(id) {
     agentes.splice(index, 1);
     return true;
 }
+
+module.exports = {
+    findAll,
+    findById,
+    create,
+    update,
+    partialUpdate,
+    remove
+};

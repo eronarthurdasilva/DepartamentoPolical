@@ -22,3 +22,9 @@ router.put('/agentes/:id', agentesController.updateAgente);
 router.patch('/agentes/:id', agentesController.patchAgente);
 //rota para deletar os agentes
 router.delete('/agentes/:id', agentesController.deleteAgente);
+//rotas bonus 
+router.get('/agentes', (req, res) => {
+    if (req.query.cargo) return agentesController.getAgentesByCargo(req, res);
+    if (req.query.sort) return agentesController.getAgentesSorted(req, res);
+    return agentesController.getAllAgentes(req, res);
+});
