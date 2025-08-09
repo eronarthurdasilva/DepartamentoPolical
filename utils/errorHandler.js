@@ -1,21 +1,13 @@
-class ApiError extends Error {
-    constructor(status, message, errors = []) {
-        super(message);
-        this.status = status;
-        this.errors = errors;
-    }
-    
-    static badRequest(message, errors = []) {
-        return new ApiError(400, message, errors);
-    }
-    
-    static notFound(message) {
-        return new ApiError(404, message);
-    }
-    
-    static internal(message) {
-        return new ApiError(500, message);
-    }
+function errorHandler(err, req, res, next) {
+  console.error(err.stack);
+
+  const statusCode = err.statusCode || 500;
+
+  res.status(statusCode).json({
+    message: err.message || 'Ocorreu um erro interno no servidor.',
+    // Em ambiente de desenvolvimento, pode ser útil enviar o stack trace.
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
+  });
 }
 
-module.exports = ApiError;
+module.exports = errorHandler;

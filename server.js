@@ -1,36 +1,23 @@
+require('dotenv').config();
 const express = require('express');
-const path = require('path'); // Adicione esta linha
+const agentesRoutes = require('./routes/agentesRoutes');
+const casosRoutes = require('./routes/casosRoutes');
+const errorHandler = require('./utils/errorHandler');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Importação de routers (verifique os caminhos)
-const casosRouter = require('./routes/casosRoutes');
-const agentesRouter = require('./routes/agentesRoutes');
-
-// Middlewares
+// Middleware para parsear JSON
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public'))); // Correção aqui
 
-// Rotas
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// Rotas da API
+app.use('/agentes', agentesRoutes);
+app.use('/casos', casosRoutes);
 
-app.use('/agentes', agentesRouter);
-app.use('/casos', casosRouter);
-
-// Middleware para rotas não encontradas (404)
-app.use((req, res) => {
-  res.status(404).json({ message: 'Rota não encontrada' });
-});
-
-// Middleware para tratamento de erros
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Erro interno do servidor' });
-});
+// Middleware de tratamento de erros (deve ser o último)
+app.use(errorHandler);
 
 // Inicia o servidor
 app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
