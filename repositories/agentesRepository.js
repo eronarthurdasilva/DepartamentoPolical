@@ -16,6 +16,10 @@ const update = (id, agente) => {
     return db('agentes').where({ id }).update(agente).returning('*');
 };
 
+const partialUpdate = (id, agente) => {
+    return db('agentes').where({ id }).update(agente).returning('*');
+};
+
 const remove = (id) => {
     return db('agentes').where({ id }).del();
 };
@@ -25,5 +29,6 @@ module.exports = {
     findById,
     create,
     update,
+    partialUpdate,
     remove
 };
