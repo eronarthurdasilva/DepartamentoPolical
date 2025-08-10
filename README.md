@@ -142,5 +142,74 @@ GET	/casos?status=aberto	Filtra casos
 
 ## Parte dois do projeto 
 
+### Descrição
+
+Nesta etapa, desenvolvi um sistema de gerenciamento policial mais robusto, incorporando novas funcionalidades, gerenciando agentes e casos utilizando um banco de dados relacional (PostgreSQL) para armazenamento persistente.
+Os dados são armazenados em tabelas, permitindo consultas mais complexas e eficientes.
+Também utilizamos o Sequelize como ORM para facilitar a interação com o banco de dados, docker para containerização e gerenciamento de dependências.
+
+### Estrutura do projeto atualizada
+DepartamentoPolicial
+├── controllers/ # Lógica de negócio
+├── db/
+│ ├── migrations/ # Estrutura do banco
+│ ├── seeds/ # Dados iniciais
+│ └── db.js # Configuração do Knex
+├── repositories/ # Acesso ao banco de dados
+├── routes/ # Definição de rotas
+├── utils/ # Funções auxiliares
+├── docker-compose.yml # Subida do banco via Docker
+├── knexfile.js # Configuração do Knex
+├── server.js # Entrada da aplicação
+├── package.json # Dependências e scripts
+└── .env # Variáveis de ambiente
+
+### Tecnologias Utilizadas
+
+#### **Backend**
+- **Node.js** → Plataforma para executar o JavaScript no lado do servidor.
+- **Express** → Framework minimalista para criação das rotas e middleware.
+- **Knex.js** → Query Builder para facilitar operações no banco de dados.
+- **Dotenv** → Para carregar variáveis de ambiente do arquivo `.env`.
+
+#### **Banco de Dados**
+- **PostgreSQL** → Banco relacional usado para persistência dos dados.
+- **Migrations** (Knex) → Controle de versão da estrutura do banco.
+- **Seeds** (Knex) → Inserção de dados iniciais para teste e desenvolvimento.
+
+#### **Ambiente e Ferramentas**
+- **Docker** → Para subir o banco PostgreSQL isolado em um container.
+- **Docker Compose** → Automatiza a criação e configuração do banco.
+- **WSL2** → Necessário no Windows para rodar Docker de forma eficiente.
+
+#### **Organização do Código**
+- **Controllers** → Contêm a lógica de negócio e regras de cada recurso.
+- **Repositories** → Lidam com a comunicação com o banco usando Knex.
+- **Routes** → Definem os endpoints da API.
+- **Utils** → Funções utilitárias (como tratamento de erros).
+- **Migrations** → Definem as tabelas `agentes` e `casos` com suas colunas e relacionamentos.
+- **Seeds** → Inserem registros iniciais (mínimo 2 agentes e 2 casos).
+
+#### **Testes**
+- **Jest** → Framework de testes para garantir a qualidade do código.
+- **Supertest** → Para testar as rotas da API.
+
+### Como executar o projeto
+As instruções se encontram no INSTRUCOES.README, onde estara passo a passo de como executar o projeto.
+
+### Funcionalidades extras
+
+- **Autenticação** → Implementação de JWT para proteger rotas.
+- **Paginação** → Suporte a paginação nas listagens.
+- **Filtros** → Possibilidade de filtrar agentes e casos por diferentes critérios.
+- **Busca** → Implementação de busca textual nos casos.
+- **Notificações** → Sistema de notificações para atualizações de casos.
 
 
+### Melhorias Futuras
+
+- **Documentação** → Melhorar a documentação da API com exemplos de uso.
+- **Testes** → Aumentar a cobertura de testes, incluindo testes de integração.
+- **Desempenho** → Otimizar consultas ao banco de dados para melhorar o desempenho.
+- **Escalabilidade** → Preparar a aplicação para escalar horizontalmente.
+- **Monitoramento** → Implementar ferramentas de monitoramento e logging.
